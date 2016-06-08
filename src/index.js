@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, useRouterHistory } from 'react-router';
 import {createHashHistory } from 'history';
 import Home from './components/home.js';
+import 'bootstrap-webpack';
+import './styles/styles.scss';
 
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
