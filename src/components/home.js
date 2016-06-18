@@ -58,15 +58,19 @@ class Home extends React.Component{
 	}
 	getBars(e){
 		e.preventDefault();
+		let user = '';
 		if(!this.refs.location.value){
 			console.log('Meh')
 			return
 		}
 		localStorage.setItem('location', this.refs.location.value);
+		if(Auth.isLoggedIn()){
+			user = Auth.currentUserId();
+		}
 		$.ajax({
 			type: 'POST',
 			url: '/getbars',
-			data: {location: this.refs.location.value},
+			data: {location: this.refs.location.value, user: user},
 			success: (data)=>{
 				this.setState({bars: data})
 				console.log(data)

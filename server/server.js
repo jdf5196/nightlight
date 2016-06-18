@@ -38,7 +38,24 @@ app.use(require('express-session')({ secret: jwtSecret, resave: true, saveUninit
 
 app.post('/getbars', (req, res)=>{
 	let location = req.body.location;
+	let user = req.body.user;
 	let barData = [];
+	if(user != ''){
+		User.findOne({_id: user}, (err, user)=>{
+			if(err){return err}
+			else{
+				user.location = location;
+				user.save((err)=>{
+					if(err){return err}
+					else{
+						let token = user.generateJWT();
+						res.cookie('token', JSON.stringify(token));
+						return user
+					}
+				})
+			}
+		})
+	}
 	Search.search({term: 'bars', location: location}, (error, data)=>{
 		if(error){
 			return error
@@ -62,9 +79,8 @@ app.post('/getbars', (req, res)=>{
 app.post('/initial', (req, res)=>{
 	let location = req.body.location;
 	let user = req.body.user;
-	console.log(user);
 	let barData = [];
-	if(user == ''){
+	if(user == undefined){
 		return
 	}else{
 		User.findOne({_id: user}, (err, user)=>{

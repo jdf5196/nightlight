@@ -26209,8 +26209,7 @@
 
 			_this.state = {
 				bars: [],
-				user: '',
-				location: ''
+				user: ''
 			};
 			return _this;
 		}
@@ -26272,15 +26271,19 @@
 				var _this4 = this;
 
 				e.preventDefault();
+				var user = '';
 				if (!this.refs.location.value) {
 					console.log('Meh');
 					return;
 				}
 				localStorage.setItem('location', this.refs.location.value);
+				if (_auth2.default.isLoggedIn()) {
+					user = _auth2.default.currentUserId();
+				}
 				$.ajax({
 					type: 'POST',
 					url: '/getbars',
-					data: { location: this.refs.location.value },
+					data: { location: this.refs.location.value, user: user },
 					success: function success(data) {
 						_this4.setState({ bars: data });
 						console.log(data);
