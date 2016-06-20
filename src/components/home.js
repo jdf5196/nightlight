@@ -9,14 +9,16 @@ class Home extends React.Component{
 		super(props);
 		this.state = {
 			bars: [],
-			user: ''
+			user: '',
+			location: ''
 		}
+		this.change = this.change.bind(this);
+		this.button = this.button.bind(this);
 	}
 	componentWillMount(){
 		let user = Auth.currentUserName();
 		let userId = Auth.currentUserId();
-		let location = ''
-		console.log(userId)
+		let location = '';
 		if(Auth.location() == '' && !localStorage.getItem('location')){
 			location = ''
 		}else if(Auth.location() != ''){
@@ -31,7 +33,8 @@ class Home extends React.Component{
 				data: {location: location, user: userId},
 				success: (data)=>{
 					let updateUser = Auth.currentUserName();
-					this.setState({bars: data, user: updateUser})
+					let location = Auth.location();
+					this.setState({bars: data, user: updateUser, location: location})
 				}
 			})
 		}else{
@@ -40,27 +43,27 @@ class Home extends React.Component{
 		
 	}
 	going(data){
-		let bars = this.state.bars;
-		let bar = bars[bars.indexOf(data)];
-		if(bar.Attending.indexOf(this.state.user) > -1){
-			bar.Attending.splice(bar.Attending.indexOf(this.state.user), 1)
+		if(!Auth.isLoggedIn){
+			return
 		}else{
-			bar.Attending.push(currentUser);
+			let bars = this.state.bars;
+			let bar = bars[bars.indexOf(data)];
+			let postdata = {bar: bar, user: Auth.currentUserId()};
+			$.ajax({
+				type: 'POST',
+				url: '/going',
+				data: postdata,
+				success: (newData)=>{
+					bars.splice(bars.indexOf(bar), 1, newData.bar);
+					this.setState({bars: bars})
+				}
+			})
 		}
-		$.ajax({
-			type: 'POST',
-			url: '/going',
-			data: data,
-			success: (data)=>{
-				this.setState({bars: data})
-			}
-		})
 	}
 	getBars(e){
 		e.preventDefault();
 		let user = '';
 		if(!this.refs.location.value){
-			console.log('Meh')
 			return
 		}
 		localStorage.setItem('location', this.refs.location.value);
@@ -73,29 +76,40 @@ class Home extends React.Component{
 			data: {location: this.refs.location.value, user: user},
 			success: (data)=>{
 				this.setState({bars: data})
-				console.log(data)
 			}
 		})
 	}
+	change(e){
+		this.setState({location: e.target.value})
+	}
+	button(){
+		if(Auth.isLoggedIn()){
+			return(
+				<button className='btn btn-danger' onClick={this.logOut.bind(this)}>LogOut</button>
+			)
+		}else{
+			return (
+				<a href='/login/twitter'><button className='btn btn-info'>Login</button></a>
+			)
+		}
+	}
 	login(e){
 		e.preventDefault()
-		console.log(Auth.currentUserName());
 	}
 	logOut(e){
 		e.preventDefault();
 		Auth.logOut();
-		this.setState({user: '', location: ''});
+		this.setState({user: '', location: '', bars: []});
 	}
 	render(){
 		return(
 			<div>
 				<Navbar currentUser={this.state.user} />
 				<form>
-					<input type='text' ref='location' placeholder='Location'/>
+					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
  					<button onClick={this.getBars.bind(this)} className='btn btn-danger'>Button!</button>
 				</form>
-				<a href='/login/twitter'><button className='btn btn-info'>Login</button></a>
-				<button className='btn btn-danger' onClick={this.logOut.bind(this)}>LogOut</button>
+				{this.button()}
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />
 				<Footer />
 			</div>

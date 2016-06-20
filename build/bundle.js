@@ -26209,8 +26209,11 @@
 
 			_this.state = {
 				bars: [],
-				user: ''
+				user: '',
+				location: ''
 			};
+			_this.change = _this.change.bind(_this);
+			_this.button = _this.button.bind(_this);
 			return _this;
 		}
 
@@ -26222,7 +26225,6 @@
 				var user = _auth2.default.currentUserName();
 				var userId = _auth2.default.currentUserId();
 				var location = '';
-				console.log(userId);
 				if (_auth2.default.location() == '' && !localStorage.getItem('location')) {
 					location = '';
 				} else if (_auth2.default.location() != '') {
@@ -26237,7 +26239,8 @@
 						data: { location: location, user: userId },
 						success: function success(data) {
 							var updateUser = _auth2.default.currentUserName();
-							_this2.setState({ bars: data, user: updateUser });
+							var location = _auth2.default.location();
+							_this2.setState({ bars: data, user: updateUser, location: location });
 						}
 					});
 				} else {
@@ -26249,21 +26252,24 @@
 			value: function going(data) {
 				var _this3 = this;
 
-				var bars = this.state.bars;
-				var bar = bars[bars.indexOf(data)];
-				if (bar.Attending.indexOf(this.state.user) > -1) {
-					bar.Attending.splice(bar.Attending.indexOf(this.state.user), 1);
+				if (!_auth2.default.isLoggedIn) {
+					return;
 				} else {
-					bar.Attending.push(currentUser);
+					(function () {
+						var bars = _this3.state.bars;
+						var bar = bars[bars.indexOf(data)];
+						var postdata = { bar: bar, user: _auth2.default.currentUserId() };
+						$.ajax({
+							type: 'POST',
+							url: '/going',
+							data: postdata,
+							success: function success(newData) {
+								bars.splice(bars.indexOf(bar), 1, newData.bar);
+								_this3.setState({ bars: bars });
+							}
+						});
+					})();
 				}
-				$.ajax({
-					type: 'POST',
-					url: '/going',
-					data: data,
-					success: function success(data) {
-						_this3.setState({ bars: data });
-					}
-				});
 			}
 		}, {
 			key: 'getBars',
@@ -26273,7 +26279,6 @@
 				e.preventDefault();
 				var user = '';
 				if (!this.refs.location.value) {
-					console.log('Meh');
 					return;
 				}
 				localStorage.setItem('location', this.refs.location.value);
@@ -26286,22 +26291,46 @@
 					data: { location: this.refs.location.value, user: user },
 					success: function success(data) {
 						_this4.setState({ bars: data });
-						console.log(data);
 					}
 				});
+			}
+		}, {
+			key: 'change',
+			value: function change(e) {
+				this.setState({ location: e.target.value });
+			}
+		}, {
+			key: 'button',
+			value: function button() {
+				if (_auth2.default.isLoggedIn()) {
+					return _react2.default.createElement(
+						'button',
+						{ className: 'btn btn-danger', onClick: this.logOut.bind(this) },
+						'LogOut'
+					);
+				} else {
+					return _react2.default.createElement(
+						'a',
+						{ href: '/login/twitter' },
+						_react2.default.createElement(
+							'button',
+							{ className: 'btn btn-info' },
+							'Login'
+						)
+					);
+				}
 			}
 		}, {
 			key: 'login',
 			value: function login(e) {
 				e.preventDefault();
-				console.log(_auth2.default.currentUserName());
 			}
 		}, {
 			key: 'logOut',
 			value: function logOut(e) {
 				e.preventDefault();
 				_auth2.default.logOut();
-				this.setState({ user: '', location: '' });
+				this.setState({ user: '', location: '', bars: [] });
 			}
 		}, {
 			key: 'render',
@@ -26313,27 +26342,14 @@
 					_react2.default.createElement(
 						'form',
 						null,
-						_react2.default.createElement('input', { type: 'text', ref: 'location', placeholder: 'Location' }),
+						_react2.default.createElement('input', { type: 'text', onChange: this.change, value: this.state.location, ref: 'location', placeholder: 'Location' }),
 						_react2.default.createElement(
 							'button',
 							{ onClick: this.getBars.bind(this), className: 'btn btn-danger' },
 							'Button!'
 						)
 					),
-					_react2.default.createElement(
-						'a',
-						{ href: '/login/twitter' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'btn btn-info' },
-							'Login'
-						)
-					),
-					_react2.default.createElement(
-						'button',
-						{ className: 'btn btn-danger', onClick: this.logOut.bind(this) },
-						'LogOut'
-					),
+					this.button(),
 					_react2.default.createElement(_barlist2.default, { going: this.going.bind(this), bars: this.state.bars }),
 					_react2.default.createElement(_footer2.default, null)
 				);
