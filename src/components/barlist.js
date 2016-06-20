@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const Barlist = (props)=>{
 	const bars = props.bars.map((bar)=>{
@@ -14,10 +15,10 @@ const Barlist = (props)=>{
 	});
 	return (
 		<div className='center container'>
-			<h2>Bar List</h2>
-			<hr />
 			<ul className='barlist'>
-			{bars}
+				<ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={1000} transitionLeaveTimeout={500}>
+          			{bars}
+        		</ReactCSSTransitionGroup>
 			</ul>
 		</div>
 	)

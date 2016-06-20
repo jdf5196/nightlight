@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Navbar from './navbar.js';
 import Footer from './footer.js';
 import Barlist from './barlist.js';
@@ -13,7 +14,7 @@ class Home extends React.Component{
 			location: ''
 		}
 		this.change = this.change.bind(this);
-		this.button = this.button.bind(this);
+		this.heading = this.heading.bind(this);
 	}
 	componentWillMount(){
 		let user = Auth.currentUserName();
@@ -79,37 +80,38 @@ class Home extends React.Component{
 			}
 		})
 	}
-	change(e){
-		this.setState({location: e.target.value})
-	}
-	button(){
-		if(Auth.isLoggedIn()){
-			return(
-				<button className='btn btn-danger' onClick={this.logOut.bind(this)}>LogOut</button>
-			)
+	heading(){
+		console.log(this.state.bars.length)
+		if(this.state.bars.length === 0){
+			return (<hr />)
 		}else{
 			return (
-				<a href='/login/twitter'><button className='btn btn-info'>Login</button></a>
+				<div className='center'>
+					<h2>Bar List</h2>
+					<hr />
+				</div>
 			)
 		}
+	}
+	change(e){
+		this.setState({location: e.target.value})
 	}
 	login(e){
 		e.preventDefault()
 	}
-	logOut(e){
-		e.preventDefault();
+	logOut(){
 		Auth.logOut();
 		this.setState({user: '', location: '', bars: []});
 	}
 	render(){
 		return(
 			<div>
-				<Navbar currentUser={this.state.user} />
+				<Navbar logOut={this.logOut.bind(this)} currentUser={this.state.user} />
 				<form>
 					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
  					<button onClick={this.getBars.bind(this)} className='btn btn-danger'>Button!</button>
 				</form>
-				{this.button()}
+				{this.heading()}
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />
 				<Footer />
 			</div>

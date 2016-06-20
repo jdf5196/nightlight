@@ -1,3 +1,6 @@
+html{
+	height: 100%;
+}
 body{
 	position:relative;
 	margin: 0;
@@ -10,6 +13,12 @@ body{
 }
 .navbar{
 	height: 50px;
+	#collapse{
+		float:right;
+	}
+	ul li{
+		display:inline-block;
+	}
 }
 .footer{
 	height: 50px;
@@ -37,4 +46,25 @@ body{
 	display:inline-block;
 	background:white;
 	border-radius:10px;
+}
+
+
+.example-enter {
+  opacity: 1;
+  transform: translateY(100rem);
+  transition: all 500ms ease-out;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transform: none;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: all 300ms linear;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
 }
