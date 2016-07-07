@@ -19,7 +19,7 @@ passport.deserializeUser((id, done)=>{
 passport.use(new Strategy({
 	consumerKey: process.env.consumerKey || Secret.consumerKey,
 	consumerSecret: process.env.consumerSecret || Secret.consumerSecret,
-	callbackURL: 'http://localhost:5000/login/twitter/return' 
+	callbackURL: 'https://nightlite.herokuapp.com/login/twitter/return' 
 },
 	(token, tokenSecret, profile, done)=>{
 		process.nextTick(()=>{
