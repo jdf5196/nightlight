@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Navbar from './navbar.js';
+import Header from './header.js';
 import Footer from './footer.js';
 import Barlist from './barlist.js';
 import Auth from '../javascripts/auth.js';
@@ -107,9 +108,10 @@ class Home extends React.Component{
 		return(
 			<div>
 				<Navbar logOut={this.logOut.bind(this)} currentUser={this.state.user} />
-				<form>
+				<Header />
+				<form className='form'>
 					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
- 					<button onClick={this.getBars.bind(this)} className='btn btn-danger'>Button!</button>
+ 					<button onClick={this.getBars.bind(this)} className='button btn'>Search</button>
 				</form>
 				{this.heading()}
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />

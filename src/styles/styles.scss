@@ -1,3 +1,13 @@
+$color: #222;
+$color2: #33a5b7;
+
+@mixin linear-gradient($c1, $c2){
+	background: -webkit-linear-gradient($c1, $c2);
+	background: -moz-linear-gradient($c1, $c2);
+	background: -ms-linear-gradient($c1, $c2);
+	background: linear-gradient($c1, $c2);
+}
+
 html{
 	height: 100%;
 }
@@ -7,6 +17,31 @@ body{
 	margin-bottom: -50px;
 	padding-bottom:5rem;
 	min-height: 100%;
+	background-color:$color;
+}
+h2{
+	color: $color2 - 20;
+}
+.button{
+		height:33px;
+		background-color:$color2;
+		border-color:$color2 + 100;
+		&:hover{
+			background-color:$color2 + 100;
+			border-color:$color2;
+		}
+	}
+.form{
+	text-align: center;
+	margin-top:50px;
+	input{
+		width: 50%;
+		height: 35px;
+		background-color:$color + 50;
+		color:white;
+		border-color:#a2a2a2;
+		margin-right:10px;
+	}
 }
 .push{
 	height: 50px;
@@ -28,6 +63,9 @@ body{
 	left: 0;
 	padding: 1rem;
 	text-align: center;
+	p{
+		color:$color2 - 20;
+	}
 }
 .center{
 	text-align:center;
@@ -36,16 +74,77 @@ body{
 	list-style:none;
 	display:inline-block;
 	padding-left:0px;
+	span{
+		.bar{
+			padding-top:15px;
+			border-radius: 10px;
+			border-size: 1px;
+			border:solid;
+			border-color: rgba(0,0,0,0);
+			min-height:150px;
+			&:hover{
+				border-color: $color2;
+			}
+		}
+		div{
+			.yelp{
+				float: left;
+				img{
+					min-height:100px;
+					min-width: 100px;
+					border-radius: 6px;
+					margin: 0 10px;
+					padding: 0 !important;
+				}
+				p{
+					margin-left:15px;
+					color:$color2;
+				}
+			}
+			a{
+				padding-top:5px;
+				display:block;
+				position:relative;
+				margin-right: 2px;
+				margin-left: -15px!important;
+				font-size: 18px;
+			}
+			.snippet{
+				color: $color2 + 50;
+				font-style: italic;
+				margin-left:120px;
+			}
+			.going{
+				margin-top:-5px;
+				margin-bottom: 5px;
+			}
+		}
+	}
 }
-.bar{
-	width: 250px;
-	margin-top:20px;
-	margin-right:5px;
-	margin-left:5px;
-	margin-bottom: 5px;
-	display:inline-block;
-	background:white;
-	border-radius:10px;
+
+.symbol{
+	height: 100px;
+	width: 100px;
+	border-radius: 50px;
+	line-height: 40px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.header{
+	color:white;
+	margin-top:-20px;
+	height: 350px;
+	width: 100%;
+	margin-top:-20px;
+	padding-top:50px;
+	text-align:center;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/img-1dd431.jpg');
+	background-size: cover;
+	background-repeat:no-repeat;
+	background-position:center;
+	background-attachment:scroll;
 }
 
 

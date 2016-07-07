@@ -4,6 +4,7 @@ import { Router, Route, Link, useRouterHistory } from 'react-router';
 import {createHashHistory } from 'history';
 import Home from './components/home.js';
 import 'bootstrap-webpack';
+import './styles/night.jpg';
 import './styles/styles.scss';
 
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});

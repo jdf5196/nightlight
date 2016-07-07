@@ -158,20 +158,18 @@ app.post('/going', (req, res)=>{
 			}
 			aBar.save((err)=>{
 				if(err){return err}
-				res.json({bar: aBar})
+				bar.Attending = aBar.Attending;
+				res.json({bar: bar})
 			})
 		}else{
 			let newBar = new Bar();
 			newBar.name = bar.name;
 			newBar.phone = bar.phone;
-			newBar.rating = bar.rating;
-			newBar.image = bar.image;
 			newBar.Attending = [user];
-			newBar.url = bar.url;
-			newBar.snippet = bar.snippet;
 			newBar.save((err)=>{
 				if(err)return err;
-				res.json({bar: newBar})
+				bar.Attending = newBar.Attending;
+				res.json({bar: bar})
 			})
 		}
 	})

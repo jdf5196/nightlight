@@ -23,7 +23,7 @@ const Navbar = (props)=>{
         					<span className="sr-only">Toggle navigation</span>
         					<span className="glyphicon glyphicon-align-justify"></span>
   						</button>
-						<p className='navbar-brand'><a href="/#/">NightLight</a></p>
+						<p className='navbar-brand'><a href="/#/">NightLite</a></p>
 					</div>
 					<div className='collapse navbar-collapse' id='collapse'>
 						{loggedIn()}
