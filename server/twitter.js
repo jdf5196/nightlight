@@ -3,7 +3,6 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
 const Strategy = require('passport-twitter').Strategy;
-const Secret = require('./secret.js');
 require('../models/user.js');
 const User = mongoose.model('User');
 

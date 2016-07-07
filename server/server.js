@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const jwt = require('express-jwt')
-const Secret = require('./secret.js');
+const jwt = require('express-jwt');
 const db = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nightlite';
 mongoose.connect(db);
 require('../models/bar.js');

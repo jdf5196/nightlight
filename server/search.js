@@ -1,6 +1,5 @@
 'use strict';
 
-const Secret = require('./secret');
 const Yelp = require('yelp');
 
 let Search = new Yelp({

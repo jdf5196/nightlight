@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Secret = require('../server/secret.js');
 const jwtSecret = process.env.SECRET || Secret.jwtSecret;
 const jwt = require('jsonwebtoken');
 
