@@ -2,10 +2,10 @@ $color: #222;
 $color2: #33a5b7;
 
 @mixin linear-gradient($c1, $c2, $url){
-	background: -webkit-linear-gradient($c1, $c2, url($url));
-	background: -moz-linear-gradient($c1, $c2, url($url));
-	background: -ms-linear-gradient($c1, $c2, url($url));
-	background: linear-gradient($c1, $c2, url($url));
+	background: -webkit-linear-gradient($c1, $c2), url($url);
+	background: -moz-linear-gradient($c1, $c2), url($url);
+	background: -ms-linear-gradient($c1, $c2), url($url);
+	background: linear-gradient($c1, $c2), url($url);
 }
 
 html{
@@ -133,7 +133,7 @@ h2{
 }
 
 .header{
-	@include linear-gradient(rgba(50, 118, 176, 1), rgba(0, 0, 0, 0.5), '/img/img-1dd431.jpg')
+	@include linear-gradient(rgba(50, 118, 176, 1), rgba(0, 0, 0, 0.5), '/img/img-1dd431.jpg');
 	color:white;
 	margin-top:-20px;
 	height: 350px;
