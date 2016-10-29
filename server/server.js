@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const passport = require('passport');
 const jwt = require('express-jwt');
 const db = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nightlite';
@@ -23,6 +24,7 @@ const setTokenCookie = (req, res)=> {
 }
 
 const app = express();
+app.use(compression());
 
 const port = process.env.PORT || 5000;
 
