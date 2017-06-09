@@ -113,7 +113,7 @@ class Home extends React.Component{
 					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
  					<button onClick={this.getBars.bind(this)} className='button btn'>Search</button>
 				</form>
-				{this.heading()}
+				{this.heading}
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />
 				<Footer />
 			</div>
