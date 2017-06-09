@@ -16,7 +16,6 @@ class Home extends React.Component{
 			barclass: 'change hidden'
 		}
 		this.change = this.change.bind(this);
-		this.heading = this.heading.bind(this);
 	}
 	componentWillMount(){
 		let user = Auth.currentUserName();
