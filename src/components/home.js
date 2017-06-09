@@ -12,7 +12,8 @@ class Home extends React.Component{
 		this.state = {
 			bars: [],
 			user: '',
-			location: ''
+			location: '',
+			barclass: 'change hidden'
 		}
 		this.change = this.change.bind(this);
 		this.heading = this.heading.bind(this);
@@ -36,7 +37,7 @@ class Home extends React.Component{
 				success: (data)=>{
 					let updateUser = Auth.currentUserName();
 					let location = Auth.location();
-					this.setState({bars: data, user: updateUser, location: location})
+					this.setState({bars: data, user: updateUser, location: location, barclass: 'change show'})
 				}
 			})
 		}else{
@@ -57,7 +58,7 @@ class Home extends React.Component{
 				data: postdata,
 				success: (newData)=>{
 					bars.splice(bars.indexOf(bar), 1, newData.bar);
-					this.setState({bars: bars})
+					this.setState({bars: bars, barclass: 'change show'})
 				}
 			})
 		}
@@ -77,22 +78,9 @@ class Home extends React.Component{
 			url: '/getbars',
 			data: {location: this.refs.location.value, user: user},
 			success: (data)=>{
-				this.setState({bars: data})
+				this.setState({bars: data, barclass: 'change show'})
 			}
 		})
-	}
-	heading(){
-		console.log(this.state.bars.length)
-		if(this.state.bars.length === 0){
-			return (<hr />)
-		}else{
-			return (
-				<div className='center'>
-					<h2>Bar List</h2>
-					<hr />
-				</div>
-			)
-		}
 	}
 	change(e){
 		this.setState({location: e.target.value})
@@ -113,7 +101,10 @@ class Home extends React.Component{
 					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
  					<button onClick={this.getBars.bind(this)} className='button btn'>Search</button>
 				</form>
-				{this.heading}
+				<div className={this.state.barclass}>
+					<h2>Bar List</h2>
+					<hr />
+				</div>
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />
 				<Footer />
 			</div>

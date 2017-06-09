@@ -147,8 +147,12 @@ h2{
 	background-position:center;
 	background-attachment:scroll;
 }
-
-
+.hidden{
+	display:none;
+}
+.show{
+	display:block;
+}
 .example-enter {
   opacity: 1;
   transform: translateY(100rem);
