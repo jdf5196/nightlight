@@ -34,6 +34,8 @@ Auth.currentUserName = ()=>{
 		let token = Auth.getToken();
 		let username = JSON.parse(window.atob(token.split('.')[1])).username;
 		return username;
+	}else{
+		return '';
 	}
 }
 
@@ -50,6 +52,8 @@ Auth.location = ()=>{
 		let token = Auth.getToken();
 		let location = JSON.parse(window.atob(token.split('.')[1])).location;
 		return location;
+	}else{
+		return ''
 	}
 }
 

@@ -21,7 +21,7 @@ class Home extends React.Component{
 		let user = Auth.currentUserName();
 		let userId = Auth.currentUserId();
 		let location = '';
-		if(Auth.location() == '' && !localStorage.getItem('location')){
+		if(Auth.location() === '' && !localStorage.getItem('location')){
 			location = ''
 		}else if(Auth.location() != ''){
 			location = Auth.location()
@@ -82,7 +82,6 @@ class Home extends React.Component{
 		})
 	}
 	heading(){
-		console.log(this.state.bars.length)
 		if(this.state.bars.length === 0){
 			return (<hr />)
 		}else{

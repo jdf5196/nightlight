@@ -2,14 +2,14 @@ import React from 'react';
 
 const Navbar = (props)=>{
 	const loggedIn = ()=>{
-		if(props.currentUser != ''){
+		if(props.currentUser === '' || props.currentUser === undefined){
 			return <ul className='nav navbar-nav navbar-inverse'>
-						<li><a href='#' data-toggle='collapse' data-target='.in'>{props.currentUser}</a></li>
-						<li><a href='#' onClick={props.logOut.bind(this)} data-toggle='collapse' data-target='.in'>Logout</a></li>
+						<li><a href='/login/twitter' data-toggle='collapse' data-target='.in'>Login</a></li>
 					</ul>
 		}else{
 			return <ul className='nav navbar-nav navbar-inverse'>
-						<li><a href='/login/twitter' data-toggle='collapse' data-target='.in'>Login</a></li>
+						<li><a href='#' data-toggle='collapse' data-target='.in'>{props.currentUser}</a></li>
+						<li><a href='#' onClick={props.logOut.bind(this)} data-toggle='collapse' data-target='.in'>Logout</a></li>
 					</ul>
 		}
 	}
