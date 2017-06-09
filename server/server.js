@@ -93,8 +93,9 @@ app.post('/initial', (req, res)=>{
 	let user = req.body.user;
 	let barData = [];
 	if(user == undefined){
+		res.json({error: 'error'})
 		return
-	}else{
+	}else{ 
 		User.findOne({_id: user}, (err, user)=>{
 			if(err){
 				return err
