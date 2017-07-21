@@ -1,7 +1,6 @@
 'use strict';
 
 const Yelp = require('yelp');
-const Secret = require('./secret.js');
 
 let Search = new Yelp({
 		"consumer_key": process.env.consumer_key || Secret.consumer_key,
