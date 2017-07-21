@@ -4,6 +4,7 @@ import Navbar from './navbar.js';
 import Header from './header.js';
 import Footer from './footer.js';
 import Barlist from './barlist.js';
+import Barheading from './barHeading.js';
 import Auth from '../javascripts/auth.js';
 
 class Home extends React.Component{
@@ -15,7 +16,6 @@ class Home extends React.Component{
 			location: ''
 		}
 		this.change = this.change.bind(this);
-		this.heading = this.heading.bind(this);
 	}
 	componentWillMount(){
 		let user = Auth.currentUserName();
@@ -81,18 +81,6 @@ class Home extends React.Component{
 			}
 		})
 	}
-	heading(){
-		if(this.state.bars.length === 0){
-			return (<hr />)
-		}else{
-			return (
-				<div className='center'>
-					<h2>Bar List</h2>
-					<hr />
-				</div>
-			)
-		}
-	}
 	change(e){
 		this.setState({location: e.target.value})
 	}
@@ -112,7 +100,7 @@ class Home extends React.Component{
 					<input type='text' onChange={this.change} value={this.state.location} ref='location' placeholder='Location'/>
  					<button onClick={this.getBars.bind(this)} className='button btn'>Search</button>
 				</form>
-				{this.heading()}
+				<Barheading bars={this.state.bars.length} />
 				<Barlist going={this.going.bind(this)} bars={this.state.bars} />
 				<Footer />
 			</div>
