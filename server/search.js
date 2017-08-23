@@ -9,5 +9,4 @@ let Search = new Yelp({
     	"token_secret": process.env.token_secret || Secret.token_secret
 });
 
-
 module.exports = Search;
